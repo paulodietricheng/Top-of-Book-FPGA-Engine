@@ -49,6 +49,7 @@ module Signal_Generation #(parameter PRICE_W = 32)(
             reg_cross <= 1'b0;
             reg_BID <= '0;
             reg_ASK <= '0;
+            reg_lock <= 1'b0;
         end 
         else begin
             // Spread (unsigned, clamped to zero if crossed)
