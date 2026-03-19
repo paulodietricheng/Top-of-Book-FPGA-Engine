@@ -31,18 +31,17 @@ module TOB_Engine #(
     parameter int BID = 1,
     parameter int ASK = 0
     )(
-        input logic clk, rst_n, // Signals
+        input  logic clk, rst_n, // Signals
         
         // Upstream
-        input logic [RAW_DATA_W-1:0] in_data [N-1:0],
+        input  logic [RAW_DATA_W-1:0] in_data [N-1:0],
         
         // Outputs
         output quote_t best_bid,
         output quote_t best_ask,
         output [PRICE_W:0] out_spread,
         output [PRICE_W-1:0] out_mid,
-        output logic out_cross,     
-        output logic out_lock
+        output logic out_cross     
     );
     
     // Input Buffer
@@ -76,10 +75,8 @@ module TOB_Engine #(
     
     // Signal generator
     quote_t TOB_ASK, TOB_BID;
-    logic [PRICE_W:0] _spread;
-    logic [PRICE_W-1:0] _mid;
+    logic [PRICE_W:0] _spread, _mid;
     logic _cross;    
-    logic _lock;
     
     // Generate Lanes
     genvar i;
@@ -102,6 +99,8 @@ module TOB_Engine #(
                 .SIZE_W(SIZE_W),
                 .LANE_W(LANE_W)
             ) U_DECODER (
+                .clk(clk),
+                .rst_n(rst_n),
                 .in_data(ib_out_data[i]),
                 .lane_id(i[LANE_W-1:0]),
                 .out_quote(decoded[i])
@@ -125,45 +124,58 @@ module TOB_Engine #(
                 .clk(clk),
                 .rst_n(rst_n),
                 .in_quote(filtered[i]),
+                .ask_out_quote(ask_quote[i]),
+                .bid_out_quote(bid_quote[i]),
                 .ask_out_quote_c(ask_quote_c[i]),
                 .bid_out_quote_c(bid_quote_c[i])
             );
 
             Scoring U_SCORE_BID (
+                .clk(clk),
+                .rst_n(rst_n),
+                .in_quote(bid_quote[i]),
                 .in_quote_c(bid_quote_c[i]),
-                .out_score(bid_score[i])
+                .out_score(bid_score[i]),
+                .out_quote(bid_quote_scored[i])
             );
 
             Scoring U_SCORE_ASK (
+                .clk(clk),
+                .rst_n(rst_n),
+                .in_quote(ask_quote[i]),
                 .in_quote_c(ask_quote_c[i]),
-                .out_score(ask_score[i])
+                .out_score(ask_score[i]),
+                .out_quote(ask_quote_scored[i])
             );
         end
     endgenerate
 
     // Arbiter
-    Arbiter_PIP #(.N(N), .SIDE(BID)) U_ARB_BID (
+
+    Arbiter #(.N(N)) U_ARB_BID (
         .clk(clk),
         .rst_n(rst_n),
+        .in_quote(bid_quote_scored),
         .in_score(bid_score),
         .winner_quote(bid_winner_quote)
     );
 
-    Arbiter_PIP #(.N(N), .SIDE(ASK)) U_ARB_ASK (
+    Arbiter #(.N(N)) U_ARB_ASK (
         .clk(clk),
         .rst_n(rst_n),
+        .in_quote(ask_quote_scored),
         .in_score(ask_score),
         .winner_quote(ask_winner_quote)
     );    
     
-    // Signal generator  
+    // Signal generator
+    
     Signal_Generation #(.PRICE_W(PRICE_W)) U_SG (
         .clk(clk),
         .rst_n(rst_n),
         .in_BID(bid_winner_quote),
         .in_ASK(ask_winner_quote),
         .cross_true(_cross),
-        .lock_true(_lock),
         .midpoint(_mid),
         .spread(_spread),
         .out_ASK(TOB_ASK),
@@ -174,8 +186,7 @@ module TOB_Engine #(
     assign best_bid = TOB_BID;
     assign best_ask = TOB_ASK;
     assign out_spread = _spread;
-    assign out_mid = _mid;
+    assign out_mid = _mid[PRICE_W-1:0];
     assign out_cross = _cross;
-    assign out_lock = _lock;
     
 endmodule
