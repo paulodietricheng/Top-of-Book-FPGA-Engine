@@ -20,24 +20,24 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 import Data_Structures::*;
-
-module Arbiter#(
-    parameter int N = 8
-    )(
-        input logic clk, rst_n, // Signals
-        // Upstream
+module Arbiter_PIP #(parameter int N = 8)(
+        input logic clk, rst_n,
         input quote_t in_quote [N-1:0],
         input score_t in_score [N-1:0],
-        // Downstream
         output quote_t winner_quote
     );
 
     localparam STAGES = $clog2(N);
 
-    // Input Registers (Stage 0)
+    // Stage 0 registers
     quote_t q_reg [N-1:0];
     score_t s_reg [N-1:0];
 
+    // Tree wires (combinational only)
+    quote_t q [0:STAGES][0:N-1];
+    score_t s [0:STAGES][0:N-1];
+
+    // Stage 0 = registered inputs
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             q_reg <= '{default:'0};
@@ -50,44 +50,43 @@ module Arbiter#(
         end
     end
 
-    // Tree stages
-    quote_t q [0:STAGES][0:N-1];
-    score_t s [0:STAGES][0:N-1];
-
-    // Stage 0 connections
+    // Connect stage 0 wires
     for (genvar i = 0; i < N; i++) begin
         assign q[0][i] = q_reg[i];
         assign s[0][i] = s_reg[i];
     end
 
-    // Generate tree
+    // Tournament tree (pure combinational)
     generate
         for (genvar k = 0; k < STAGES; k++) begin : GEN_TREE
             for (genvar i = 0; i < (N >> k); i += 2) begin : GEN_NODE
-
+                
+                quote_t q_w;
+                score_t s_w;
+            
                 Module_Arbiter U_ARB (
-                    .in_score_A (s[k][i]),
-                    .in_quote_A (q[k][i]),
-                    .in_score_B (s[k][i+1]),
-                    .in_quote_B (q[k][i+1]),
-                    .winner_score (s[k+1][i>>1]),
-                    .winner_quote (q[k+1][i>>1])
+                    .in_score_A(s[k][i]),
+                    .in_quote_A(q[k][i]),
+                    .in_score_B(s[k][i+1]),
+                    .in_quote_B(q[k][i+1]),
+                    .winner_score(s_w),
+                    .winner_quote(q_w)
                 );
-
+                
+                always_ff @(posedge clk or negedge rst_n) begin
+                if (!rst_n) begin
+                    q[k+1][i>>1] <= '0;
+                    s[k+1][i>>1] <= '0;
+                end else begin
+                    q[k+1][i>>1] <= q_w;
+                    s[k+1][i>>1] <= s_w;
+                end
+            end
+                
             end
         end
     endgenerate
 
-    // Final Output Register
-    quote_t winner_reg;
-
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n)
-            winner_reg <= '0;
-        else
-            winner_reg <= q[STAGES][0];
-    end
-
-    assign winner_quote = winner_reg;
+    assign winner_quote = q[STAGES][0];
 
 endmodule
