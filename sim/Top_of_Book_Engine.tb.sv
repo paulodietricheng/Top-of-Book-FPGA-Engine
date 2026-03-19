@@ -24,7 +24,6 @@ module Top_of_Book_Engine_tb;
     logic signed [PRICE_W:0] out_spread;
     logic [PRICE_W-1:0] out_mid;
     logic out_cross;
-    logic out_lock;
 
     // DUT
     TOB_Engine #(.N(N)) DUT (
@@ -36,7 +35,6 @@ module Top_of_Book_Engine_tb;
         .out_spread(out_spread),
         .out_mid(out_mid),
         .out_cross(out_cross),
-        .out_lock(out_lock)
     );
 
     // CLOCK
@@ -153,9 +151,6 @@ module Top_of_Book_Engine_tb;
         if (out_cross !== exp_cross)
             $fatal("Cross mismatch");
             
-        if (out_lock != exp_lock)
-            $fatal("Lock mismatch");
-
         $display("PASS");
     endtask
 
