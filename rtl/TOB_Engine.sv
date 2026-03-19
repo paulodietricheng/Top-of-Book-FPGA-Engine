@@ -102,6 +102,8 @@ module TOB_Engine #(
                 .SIZE_W(SIZE_W),
                 .LANE_W(LANE_W)
             ) U_DECODER (
+                .clk(clk),
+                .rst_n(rst_n),
                 .in_data(ib_out_data[i]),
                 .lane_id(i[LANE_W-1:0]),
                 .out_quote(decoded[i])
@@ -130,11 +132,15 @@ module TOB_Engine #(
             );
 
             Scoring U_SCORE_BID (
+                .clk(clk),
+                .rst_n(rst_n),
                 .in_quote_c(bid_quote_c[i]),
                 .out_score(bid_score[i])
             );
 
             Scoring U_SCORE_ASK (
+                .clk(clk),
+                .rst_n(rst_n),
                 .in_quote_c(ask_quote_c[i]),
                 .out_score(ask_score[i])
             );
