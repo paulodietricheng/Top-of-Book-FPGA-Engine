@@ -21,18 +21,16 @@ module Filter(
     // Register variables
     quote_t reg_quote;
     logic [31:0] last_timestamp;
-    logic take;
-    assign take = (in_quote.valid && in_quote.timestamp >= last_timestamp);
-       
+    
     always_ff @(posedge clk, negedge rst_n) begin
         if(!rst_n) begin
             reg_quote <= '0;
             last_timestamp <= '0;
-        end else if (take) begin
+        end else if (in_quote.valid && in_quote.timestamp >= last_timestamp) begin
             last_timestamp <= in_quote.timestamp;
             reg_quote <= in_quote;
         end else
-            reg_quote.valid <= 1'b0;
+            reg_quote <= '0;
     end
     
     assign out_quote = reg_quote;
