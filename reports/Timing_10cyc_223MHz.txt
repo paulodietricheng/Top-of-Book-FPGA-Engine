@@ -1,5 +1,5 @@
 | Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-| Date         : Wed Mar 18 23:08:19 2026
+| Date         : Wed Mar 18 20:31:04 2026
 | Host         : Paulos_LOQ running 64-bit major release  (build 9200)
 | Command      : report_timing_summary
 | Design       : TOB_Engine
@@ -136,7 +136,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      0.001        0.000                      0                 6362        0.139        0.000                      0                 6362        1.739        0.000                       0                  5325  
+      0.001        0.000                      0                 9741        0.139        0.000                      0                 9741        1.739        0.000                       0                  8195  
 
 
 All user specified timing constraints are met.
@@ -159,7 +159,7 @@ sys_clk  {0.000 2.239}        4.478           223.314
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-sys_clk             0.001        0.000                      0                 6362        0.139        0.000                      0                 6362        1.739        0.000                       0                  5325  
+sys_clk             0.001        0.000                      0                 9741        0.139        0.000                      0                 9741        1.739        0.000                       0                  8195  
 
 
 ------------------------------------------------------------------------------------------------
@@ -226,26 +226,26 @@ Slack (MET) :             0.001ns  (required time - arrival time)
                          IBUF (Prop_ibuf_I_O)         0.996     0.996 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     1.796    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     1.892 r  clk_IBUF_BUFG_inst/O
-                         net (fo=5324, unplaced)      0.584     2.476    GEN_LANES[0].U_FILTER/clk_IBUF_BUFG
+                         net (fo=8194, unplaced)      0.584     2.476    GEN_LANES[0].U_FILTER/clk
                          FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[timestamp][0]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.456     2.932 f  GEN_LANES[0].U_FILTER/reg_quote_reg[timestamp][0]/Q
-                         net (fo=3, unplaced)         0.759     3.691    GEN_LANES[0].U_IB/filtered[0][timestamp][0]
-                         LUT4 (Prop_lut4_I1_O)        0.319     4.010 r  GEN_LANES[0].U_IB/reg_quote[valid]_i_34/O
-                         net (fo=1, unplaced)         0.000     4.010    GEN_LANES[0].U_IB/reg_quote[valid]_i_34_n_0
+                         net (fo=3, unplaced)         0.759     3.691    GEN_LANES[0].U_DECODER/filtered[0][timestamp][0]
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.010 r  GEN_LANES[0].U_DECODER/reg_quote[valid]_i_34/O
+                         net (fo=1, unplaced)         0.000     4.010    GEN_LANES[0].U_DECODER/reg_quote[valid]_i_34_n_0
                          CARRY4 (Prop_carry4_DI[0]_CO[3])
-                                                      0.576     4.586 r  GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_22/CO[3]
-                         net (fo=1, unplaced)         0.009     4.595    GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_22_n_0
+                                                      0.576     4.586 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_22/CO[3]
+                         net (fo=1, unplaced)         0.009     4.595    GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_22_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     4.712 r  GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_13/CO[3]
-                         net (fo=1, unplaced)         0.000     4.712    GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_13_n_0
+                                                      0.117     4.712 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_13/CO[3]
+                         net (fo=1, unplaced)         0.000     4.712    GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_13_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     4.829 r  GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_4/CO[3]
-                         net (fo=1, unplaced)         0.000     4.829    GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_4_n_0
+                                                      0.117     4.829 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_4/CO[3]
+                         net (fo=1, unplaced)         0.000     4.829    GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_4_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     4.946 r  GEN_LANES[0].U_IB/reg_quote_reg[valid]_i_3/CO[3]
-                         net (fo=2, unplaced)         0.929     5.875    GEN_LANES[0].U_IB/GEN_LANES[0].U_FILTER/last_timestamp1
-                         LUT2 (Prop_lut2_I1_O)        0.124     5.999 r  GEN_LANES[0].U_IB/reg_quote[side]_i_1/O
+                                                      0.117     4.946 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_3/CO[3]
+                         net (fo=2, unplaced)         0.929     5.875    GEN_LANES[0].U_DECODER/GEN_LANES[0].U_FILTER/last_timestamp1
+                         LUT2 (Prop_lut2_I1_O)        0.124     5.999 r  GEN_LANES[0].U_DECODER/reg_quote[side]_i_1/O
                          net (fo=97, unplaced)        0.572     6.571    GEN_LANES[0].U_FILTER/E[0]
                          FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/CE
   -------------------------------------------------------------------    -------------------
@@ -256,7 +256,7 @@ Slack (MET) :             0.001ns  (required time - arrival time)
                          IBUF (Prop_ibuf_I_O)         0.862     5.340 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.760     6.100    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.091     6.191 r  clk_IBUF_BUFG_inst/O
-                         net (fo=5324, unplaced)      0.439     6.630    GEN_LANES[0].U_FILTER/clk_IBUF_BUFG
+                         net (fo=8194, unplaced)      0.439     6.630    GEN_LANES[0].U_FILTER/clk
                          FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/C
                          clock pessimism              0.179     6.809    
                          clock uncertainty           -0.035     6.773    
@@ -296,7 +296,7 @@ Slack (MET) :             0.139ns  (arrival time - required time)
                          IBUF (Prop_ibuf_I_O)         0.224     0.224 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.337     0.561    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.026     0.587 r  clk_IBUF_BUFG_inst/O
-                         net (fo=5324, unplaced)      0.114     0.701    GEN_LANES[0].U_FILTER/clk_IBUF_BUFG
+                         net (fo=8194, unplaced)      0.114     0.701    GEN_LANES[0].U_FILTER/clk
                          FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/C
   -------------------------------------------------------------------    -------------------
                          FDCE (Prop_fdce_C_Q)         0.141     0.842 f  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/Q
@@ -312,7 +312,7 @@ Slack (MET) :             0.139ns  (arrival time - required time)
                          IBUF (Prop_ibuf_I_O)         0.413     0.413 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.355     0.768    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.029     0.797 r  clk_IBUF_BUFG_inst/O
-                         net (fo=5324, unplaced)      0.259     1.056    GEN_LANES[0].U_CANON/clk_IBUF_BUFG
+                         net (fo=8194, unplaced)      0.259     1.056    GEN_LANES[0].U_CANON/clk_IBUF_BUFG
                          FDCE                                         r  GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/C
                          clock pessimism             -0.210     0.846    
                          FDCE (Hold_fdce_C_D)         0.091     0.937    GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]
