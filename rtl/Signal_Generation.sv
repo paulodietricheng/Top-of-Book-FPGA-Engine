@@ -26,20 +26,17 @@ module Signal_Generation #(parameter PRICE_W = 32)(
     // Upstream
     input quote_t in_BID, in_ASK,
     // Downstream
-    output logic cross_true, lock_true,
+    output logic cross_true,
     output logic signed [PRICE_W:0] spread,
-    output logic [PRICE_W-1:0]midpoint,
+    output logic [PRICE_W-1:0] midpoint,
     output quote_t out_BID, out_ASK
     );
     
     // Intermediate varialbles
-    logic signed [PRICE_W:0] comb_spread, reg_spread;
+    logic signed [PRICE_W:0] reg_spread;
     logic [PRICE_W:0] reg_mid;
     logic reg_cross;
-    logic reg_lock;
     quote_t reg_BID, reg_ASK;
-    
-    assign comb_spread = $signed({1'b0, in_ASK.price}) - $signed({1'b0, in_BID.price});
     
     // Calculations
     always_ff @(posedge clk or negedge rst_n) begin
@@ -50,15 +47,13 @@ module Signal_Generation #(parameter PRICE_W = 32)(
             reg_BID <= '0;
             reg_ASK <= '0;
         end 
-        else begin
-            // Spread (unsigned, clamped to zero if crossed)
-            reg_spread <= comb_spread;
-  
-            // Cross detection
-            reg_cross <= (comb_spread[PRICE_W]);
+        else if (in_BID.valid && in_ASK.valid) begin
             
-            // Lock detection
-            reg_lock <= (comb_spread == 0);
+            // Cross / Lock detection
+            reg_cross <= (in_BID.price >= in_ASK.price);
+    
+            // Spread
+            reg_spread <= $signed({1'b0, in_ASK.price}) - $signed({1'b0, in_BID.price});
     
             // Midpoint
             reg_mid <= ({1'b0, in_BID.price} + {1'b0, in_ASK.price}) >> 1;
@@ -72,8 +67,8 @@ module Signal_Generation #(parameter PRICE_W = 32)(
     assign spread = reg_spread;
     assign midpoint = reg_mid[PRICE_W-1:0];
     assign cross_true = reg_cross;
-    assign lock_true = reg_lock;
     assign out_BID = reg_BID;
     assign out_ASK = reg_ASK;
     
 endmodule
+
