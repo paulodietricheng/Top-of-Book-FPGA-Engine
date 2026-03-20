@@ -2,6 +2,6 @@
 `PASS`                
 `ALL TESTS PASSED SUCCESSFULLY`         
 
-![Simulation results](docs/images/sim_results.png)
+<img src="/docs/images/sim_results.png" alt="Simulation results" width="600"/>
 
 
