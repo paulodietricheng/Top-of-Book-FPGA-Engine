@@ -21,18 +21,33 @@ module Filter(
     // Register variables
     quote_t reg_quote;
     logic [31:0] last_timestamp;
-    logic take;
-    assign take = (in_quote.valid && in_quote.timestamp >= last_timestamp);
-       
-    always_ff @(posedge clk, negedge rst_n) begin
-        if(!rst_n) begin
+    
+    // pipeline stage variables
+    quote_t reg_quote_p;
+    logic take_r;
+    
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            take_r <= 1'b0;
+            reg_quote_p <= '0;
+        end else begin 
+            take_r <= in_quote.valid && (in_quote.timestamp >= last_timestamp);
+            reg_quote_p <= in_quote;
+        end
+    end
+    
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
             reg_quote <= '0;
             last_timestamp <= '0;
-        end else if (take) begin
-            last_timestamp <= in_quote.timestamp;
-            reg_quote <= in_quote;
-        end else
-            reg_quote.valid <= 1'b0;
+        end else begin
+            if (take_r) begin
+                last_timestamp <= reg_quote_p.timestamp;
+                reg_quote <= reg_quote_p;
+            end else begin
+                reg_quote.valid <= 1'b0;
+            end
+        end
     end
     
     assign out_quote = reg_quote;
