@@ -144,11 +144,11 @@ This stage defines the overall timing limit of the design, with the final implem
 The repository is organized to reflect the evolution of the design, with each branch capturing a key architectural milestone.
 - `main`  
   Final optimized implementation (8 cycles @ 223.4 MHz). This branch contains the clean, production-ready RTL along with reports and documentation.
-- `baseline`  
+- `baseline_version`  
   Initial implementation with an unpipelined arbiter (85 MHz). Serves as a reference point for performance improvements.
-- `arbiter`
+- `pipelined_arbiter`
   Introduces the pipelined tournament tree, significantly improving frequency at the cost of additional latency.
-- `datapath`  
+- `datapath_optimization`  
   Focuses on datapath optimizations, including spread reuse, simplified filtering logic, and comparator width reduction.
 - `filter_exp`  
   Experimental branch exploring a pipelined filter stage. Achieves higher frequency but worse time-domain latency, illustrating latency vs frequency tradeoffs.
