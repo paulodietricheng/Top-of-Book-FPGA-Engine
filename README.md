@@ -126,7 +126,7 @@ This stage defines the overall timing limit of the design, with the final implem
 - Pipelined arbitration tree: Pipelined the reduction tree, increasing Fmax from 85 MHz (8 cycles) to 182 MHz (10 cycles), significantly reducing overall latency.
 - Datapath simplification: Reused spread computation for cross detection, reduced filter logic to invalidate only the valid bit, and removed non-critical fields from score comparision. This improved Fmax from 182 MHz to 223.4 MHz at constant latency.
 - Pipelined filter: A pipelined filter stage increased Fmax to 240.8 MHz, but added one cycle of latency, resulting in a worse time-domain latency (45.68 ns vs 44.78 ns). This design was rejected in favor of lower absolute latency.
-- Pipeline refinement: Removed unnecessary registers in decode and scoring stages, reducing total latency from 10 cycles to 8 cycles at constant frequency (223.4 MHz).
+- Pipeline refinement: Decode and scoring stages were made purely combinational, reducing total latency from 10 cycles to 8 cycles at constant frequency (223.4 MHz).
 
 ---
 
