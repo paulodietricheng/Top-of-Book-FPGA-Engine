@@ -4,6 +4,4 @@ ALL TESTS PASSED SUCCESSFULLY
 
 ![Simulation results](docs/images/sim_results.png)
 
-![8-lane pipeline with tournament tree arbitration](docs/images/Pipeline_Diagram.png)
-
 
