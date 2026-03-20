@@ -1,5 +1,5 @@
 | Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-| Date         : Wed Mar 18 20:31:04 2026
+| Date         : Wed Mar 18 22:04:18 2026
 | Host         : Paulos_LOQ running 64-bit major release  (build 9200)
 | Command      : report_timing_summary
 | Design       : TOB_Engine
@@ -136,7 +136,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      0.001        0.000                      0                 9741        0.139        0.000                      0                 9741        1.739        0.000                       0                  8195  
+      0.000        0.000                      0                10534        0.134        0.000                      0                10534        1.576        0.000                       0                  8988  
 
 
 All user specified timing constraints are met.
@@ -149,7 +149,7 @@ All user specified timing constraints are met.
 
 Clock    Waveform(ns)         Period(ns)      Frequency(MHz)
 -----    ------------         ----------      --------------
-sys_clk  {0.000 2.239}        4.478           223.314         
+sys_clk  {0.000 2.076}        4.153           240.790         
 
 
 ------------------------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ sys_clk  {0.000 2.239}        4.478           223.314
 
 Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-sys_clk             0.001        0.000                      0                 9741        0.139        0.000                      0                 9741        1.739        0.000                       0                  8195  
+sys_clk             0.000        0.000                      0                10534        0.134        0.000                      0                10534        1.576        0.000                       0                  8988  
 
 
 ------------------------------------------------------------------------------------------------
@@ -190,26 +190,26 @@ Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing 
 From Clock:  sys_clk
   To Clock:  sys_clk
 
-Setup :            0  Failing Endpoints,  Worst Slack        0.001ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.139ns,  Total Violation        0.000ns
-PW    :            0  Failing Endpoints,  Worst Slack        1.739ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        0.000ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.134ns,  Total Violation        0.000ns
+PW    :            0  Failing Endpoints,  Worst Slack        1.576ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.001ns  (required time - arrival time)
-  Source:                 GEN_LANES[0].U_FILTER/reg_quote_reg[timestamp][0]/C
-                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.239ns period=4.478ns})
-  Destination:            GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/CE
-                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.239ns period=4.478ns})
+Slack (MET) :             0.000ns  (required time - arrival time)
+  Source:                 U_ARB_ASK/s_reg_reg[5][lane_id][2]/C
+                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.076ns period=4.153ns})
+  Destination:            U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].s_reg[1][2][lane_id][0]/D
+                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.076ns period=4.153ns})
   Path Group:             sys_clk
   Path Type:              Setup (Max at Slow Process Corner)
-  Requirement:            4.478ns  (sys_clk rise@4.478ns - sys_clk rise@0.000ns)
-  Data Path Delay:        4.095ns  (logic 1.826ns (44.591%)  route 2.269ns (55.409%))
-  Logic Levels:           6  (CARRY4=4 LUT2=1 LUT4=1)
+  Requirement:            4.153ns  (sys_clk rise@4.153ns - sys_clk rise@0.000ns)
+  Data Path Delay:        4.002ns  (logic 2.818ns (70.415%)  route 1.184ns (29.585%))
+  Logic Levels:           11  (CARRY4=9 LUT2=1 LUT4=1)
   Clock Path Skew:        -0.145ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    2.152ns = ( 6.630 - 4.478 ) 
+    Destination Clock Delay (DCD):    2.152ns = ( 6.305 - 4.153 ) 
     Source Clock Delay      (SCD):    2.476ns
     Clock Pessimism Removal (CPR):    0.179ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -226,46 +226,61 @@ Slack (MET) :             0.001ns  (required time - arrival time)
                          IBUF (Prop_ibuf_I_O)         0.996     0.996 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.800     1.796    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.096     1.892 r  clk_IBUF_BUFG_inst/O
-                         net (fo=8194, unplaced)      0.584     2.476    GEN_LANES[0].U_FILTER/clk
-                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[timestamp][0]/C
+                         net (fo=8987, unplaced)      0.584     2.476    U_ARB_ASK/clk
+                         FDCE                                         r  U_ARB_ASK/s_reg_reg[5][lane_id][2]/C
   -------------------------------------------------------------------    -------------------
-                         FDCE (Prop_fdce_C_Q)         0.456     2.932 f  GEN_LANES[0].U_FILTER/reg_quote_reg[timestamp][0]/Q
-                         net (fo=3, unplaced)         0.759     3.691    GEN_LANES[0].U_DECODER/filtered[0][timestamp][0]
-                         LUT4 (Prop_lut4_I1_O)        0.319     4.010 r  GEN_LANES[0].U_DECODER/reg_quote[valid]_i_34/O
-                         net (fo=1, unplaced)         0.000     4.010    GEN_LANES[0].U_DECODER/reg_quote[valid]_i_34_n_0
+                         FDCE (Prop_fdce_C_Q)         0.456     2.932 f  U_ARB_ASK/s_reg_reg[5][lane_id][2]/Q
+                         net (fo=4, unplaced)         0.765     3.697    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/s_reg_reg[5][lane_id][0]
+                         LUT4 (Prop_lut4_I1_O)        0.319     4.016 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry_i_4__1/O
+                         net (fo=1, unplaced)         0.000     4.016    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry_i_4__1_n_0
                          CARRY4 (Prop_carry4_DI[0]_CO[3])
-                                                      0.576     4.586 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_22/CO[3]
-                         net (fo=1, unplaced)         0.009     4.595    GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_22_n_0
+                                                      0.576     4.592 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry/CO[3]
+                         net (fo=1, unplaced)         0.009     4.601    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     4.712 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_13/CO[3]
-                         net (fo=1, unplaced)         0.000     4.712    GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_13_n_0
+                                                      0.117     4.718 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__0/CO[3]
+                         net (fo=1, unplaced)         0.000     4.718    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__0_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     4.829 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_4/CO[3]
-                         net (fo=1, unplaced)         0.000     4.829    GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_4_n_0
+                                                      0.117     4.835 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__1/CO[3]
+                         net (fo=1, unplaced)         0.000     4.835    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__1_n_0
                          CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     4.946 r  GEN_LANES[0].U_DECODER/reg_quote_reg[valid]_i_3/CO[3]
-                         net (fo=2, unplaced)         0.929     5.875    GEN_LANES[0].U_DECODER/GEN_LANES[0].U_FILTER/last_timestamp1
-                         LUT2 (Prop_lut2_I1_O)        0.124     5.999 r  GEN_LANES[0].U_DECODER/reg_quote[side]_i_1/O
-                         net (fo=97, unplaced)        0.572     6.571    GEN_LANES[0].U_FILTER/E[0]
-                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/CE
+                                                      0.117     4.952 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__2/CO[3]
+                         net (fo=1, unplaced)         0.000     4.952    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__2_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     5.069 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__3/CO[3]
+                         net (fo=1, unplaced)         0.000     5.069    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__3_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     5.186 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__4/CO[3]
+                         net (fo=1, unplaced)         0.000     5.186    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__4_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     5.303 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__5/CO[3]
+                         net (fo=1, unplaced)         0.000     5.303    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__5_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     5.420 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__6/CO[3]
+                         net (fo=1, unplaced)         0.000     5.420    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__6_n_0
+                         CARRY4 (Prop_carry4_CI_CO[0])
+                                                      0.281     5.701 f  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__7/CO[0]
+                         net (fo=99, unplaced)        0.410     6.111    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/winner_score[valid]1_carry__7_n_3
+                         LUT2 (Prop_lut2_I1_O)        0.367     6.478 r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].U_ARB/GEN_TREE[0].GEN_NODE[4].s[1][2][lane_id][0]_i_1__0/O
+                         net (fo=1, unplaced)         0.000     6.478    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].s_w[lane_id][0]
+                         FDCE                                         r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].s_reg[1][2][lane_id][0]/D
   -------------------------------------------------------------------    -------------------
 
-                         (clock sys_clk rise edge)    4.478     4.478 r  
-                                                      0.000     4.478 r  clk (IN)
-                         net (fo=0)                   0.000     4.478    clk
-                         IBUF (Prop_ibuf_I_O)         0.862     5.340 r  clk_IBUF_inst/O
-                         net (fo=1, unplaced)         0.760     6.100    clk_IBUF
-                         BUFG (Prop_bufg_I_O)         0.091     6.191 r  clk_IBUF_BUFG_inst/O
-                         net (fo=8194, unplaced)      0.439     6.630    GEN_LANES[0].U_FILTER/clk
-                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/C
-                         clock pessimism              0.179     6.809    
-                         clock uncertainty           -0.035     6.773    
-                         FDCE (Setup_fdce_C_CE)      -0.202     6.571    GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]
+                         (clock sys_clk rise edge)    4.153     4.153 r  
+                                                      0.000     4.153 r  clk (IN)
+                         net (fo=0)                   0.000     4.153    clk
+                         IBUF (Prop_ibuf_I_O)         0.862     5.015 r  clk_IBUF_inst/O
+                         net (fo=1, unplaced)         0.760     5.775    clk_IBUF
+                         BUFG (Prop_bufg_I_O)         0.091     5.866 r  clk_IBUF_BUFG_inst/O
+                         net (fo=8987, unplaced)      0.439     6.305    U_ARB_ASK/clk
+                         FDCE                                         r  U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].s_reg[1][2][lane_id][0]/C
+                         clock pessimism              0.179     6.484    
+                         clock uncertainty           -0.035     6.448    
+                         FDCE (Setup_fdce_C_D)        0.029     6.477    U_ARB_ASK/GEN_TREE[0].GEN_NODE[4].s_reg[1][2][lane_id][0]
   -------------------------------------------------------------------
-                         required time                          6.571    
-                         arrival time                          -6.571    
+                         required time                          6.477    
+                         arrival time                          -6.478    
   -------------------------------------------------------------------
-                         slack                                  0.001    
+                         slack                                  0.000    
 
 
 
@@ -273,16 +288,16 @@ Slack (MET) :             0.001ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.139ns  (arrival time - required time)
-  Source:                 GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/C
-                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.239ns period=4.478ns})
-  Destination:            GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/D
-                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.239ns period=4.478ns})
+Slack (MET) :             0.134ns  (arrival time - required time)
+  Source:                 GEN_LANES[0].U_FILTER/reg_quote_p_reg[valid]/C
+                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.076ns period=4.153ns})
+  Destination:            GEN_LANES[0].U_FILTER/reg_quote_reg[valid]/D
+                            (rising edge-triggered cell FDCE clocked by sys_clk  {rise@0.000ns fall@2.076ns period=4.153ns})
   Path Group:             sys_clk
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (sys_clk rise@0.000ns - sys_clk rise@0.000ns)
-  Data Path Delay:        0.375ns  (logic 0.239ns (63.779%)  route 0.136ns (36.221%))
-  Logic Levels:           1  (LUT1=1)
+  Data Path Delay:        0.370ns  (logic 0.239ns (64.578%)  route 0.131ns (35.422%))
+  Logic Levels:           1  (LUT2=1)
   Clock Path Skew:        0.145ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    1.056ns
     Source Clock Delay      (SCD):    0.701ns
@@ -296,14 +311,14 @@ Slack (MET) :             0.139ns  (arrival time - required time)
                          IBUF (Prop_ibuf_I_O)         0.224     0.224 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.337     0.561    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.026     0.587 r  clk_IBUF_BUFG_inst/O
-                         net (fo=8194, unplaced)      0.114     0.701    GEN_LANES[0].U_FILTER/clk
-                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/C
+                         net (fo=8987, unplaced)      0.114     0.701    GEN_LANES[0].U_FILTER/clk
+                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_p_reg[valid]/C
   -------------------------------------------------------------------    -------------------
-                         FDCE (Prop_fdce_C_Q)         0.141     0.842 f  GEN_LANES[0].U_FILTER/reg_quote_reg[price][0]/Q
-                         net (fo=2, unplaced)         0.136     0.978    GEN_LANES[0].U_CANON/Q[0]
-                         LUT1 (Prop_lut1_I0_O)        0.098     1.076 r  GEN_LANES[0].U_CANON/ask_reg_quote_c[price][0]_i_1/O
-                         net (fo=1, unplaced)         0.000     1.076    GEN_LANES[0].U_CANON/p_0_in[0]
-                         FDCE                                         r  GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/D
+                         FDCE (Prop_fdce_C_Q)         0.141     0.842 r  GEN_LANES[0].U_FILTER/reg_quote_p_reg[valid]/Q
+                         net (fo=1, unplaced)         0.131     0.974    GEN_LANES[0].U_FILTER/reg_quote_p_reg[valid]__0
+                         LUT2 (Prop_lut2_I1_O)        0.098     1.072 r  GEN_LANES[0].U_FILTER/reg_quote[valid]_i_1/O
+                         net (fo=1, unplaced)         0.000     1.072    GEN_LANES[0].U_FILTER/reg_quote
+                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[valid]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock sys_clk rise edge)    0.000     0.000 r  
@@ -312,15 +327,15 @@ Slack (MET) :             0.139ns  (arrival time - required time)
                          IBUF (Prop_ibuf_I_O)         0.413     0.413 r  clk_IBUF_inst/O
                          net (fo=1, unplaced)         0.355     0.768    clk_IBUF
                          BUFG (Prop_bufg_I_O)         0.029     0.797 r  clk_IBUF_BUFG_inst/O
-                         net (fo=8194, unplaced)      0.259     1.056    GEN_LANES[0].U_CANON/clk_IBUF_BUFG
-                         FDCE                                         r  GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/C
+                         net (fo=8987, unplaced)      0.259     1.056    GEN_LANES[0].U_FILTER/clk
+                         FDCE                                         r  GEN_LANES[0].U_FILTER/reg_quote_reg[valid]/C
                          clock pessimism             -0.210     0.846    
-                         FDCE (Hold_fdce_C_D)         0.091     0.937    GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]
+                         FDCE (Hold_fdce_C_D)         0.091     0.937    GEN_LANES[0].U_FILTER/reg_quote_reg[valid]
   -------------------------------------------------------------------
                          required time                         -0.937    
-                         arrival time                           1.076    
+                         arrival time                           1.072    
   -------------------------------------------------------------------
-                         slack                                  0.139    
+                         slack                                  0.134    
 
 
 
@@ -329,11 +344,11 @@ Slack (MET) :             0.139ns  (arrival time - required time)
 Pulse Width Checks
 --------------------------------------------------------------------------------------
 Clock Name:         sys_clk
-Waveform(ns):       { 0.000 2.239 }
-Period(ns):         4.478
+Waveform(ns):       { 0.000 2.076 }
+Period(ns):         4.153
 Sources:            { clk }
 
 Check Type        Corner  Lib Pin  Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location  Pin
-Min Period        n/a     BUFG/I   n/a            2.155         4.478       2.323                clk_IBUF_BUFG_inst/I
-Low Pulse Width   Slow    FDCE/C   n/a            0.500         2.239       1.739                GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/C
-High Pulse Width  Slow    FDCE/C   n/a            0.500         2.239       1.739                GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/C
+Min Period        n/a     BUFG/I   n/a            2.155         4.153       1.998                clk_IBUF_BUFG_inst/I
+Low Pulse Width   Slow    FDCE/C   n/a            0.500         2.076       1.576                GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/C
+High Pulse Width  Slow    FDCE/C   n/a            0.500         2.077       1.577                GEN_LANES[0].U_CANON/ask_reg_quote_c_reg[price][0]/C
